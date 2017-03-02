@@ -3,6 +3,10 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+    useLibrary 'org.apache.http.legacy'
+    sourceSets {
+        main.jniLibs.srcDirs = ['libs']
+    }
     defaultConfig {
         applicationId "com.ithomework.im"
         minSdkVersion 15
@@ -26,4 +30,8 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
     testCompile 'junit:junit:4.12'
+    compile 'com.hyphenate:hyphenate-sdk-lite:3.2.3'
+    compile 'com.google.android.gms:play-services-gcm:9.4.0'
+    compile 'com.jakewharton:butterknife:5.1.1'
+    compile 'com.android.support:design:25.1.0'
 }
