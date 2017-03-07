@@ -2,16 +2,19 @@ package com.ithomework.im.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.ithomework.im.view.BaseFragment;
 import com.ithomework.im.R;
 import com.ithomework.im.presenter.ContactPresenter;
 import com.ithomework.im.presenter.ContactPresenterIml;
 import com.ithomework.im.widget.ContactLayout;
 import com.ithomework.im.adapter.ContactAdapter;
+import com.ithomework.im.event.OnContactUpdateEvent;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 /**
@@ -37,7 +40,15 @@ public class ContactFragment extends BaseFragment implements ContactView{
         mContactPresenter = new ContactPresenterIml(this);
         //初始化联系人
         mContactPresenter.initContact();
+        //注册event事件
+        EventBus.getDefault().register(this);
     }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(OnContactUpdateEvent onContactUpdateEvent){
+        mContactPresenter.updateContacts();
+    }
+
+
 
 
     @Override
@@ -55,5 +66,10 @@ public class ContactFragment extends BaseFragment implements ContactView{
     @Override
     public void onDelete(String contact, boolean success, String msg) {
 
+    }
+
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
     }
 }

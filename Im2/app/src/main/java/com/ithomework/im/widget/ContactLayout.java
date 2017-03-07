@@ -20,8 +20,6 @@ public class ContactLayout extends RelativeLayout{
     private RecyclerView mRecyclerView;
     private TextView mTextView;
     private SlideBar mSlideBar;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-
     public ContactLayout(Context context) {
         this(context,null);
     }
@@ -34,21 +32,13 @@ public class ContactLayout extends RelativeLayout{
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mTextView = (TextView) findViewById(R.id.tv_float);
         mSlideBar = (SlideBar) findViewById(R.id.slideBar);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
-        mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent));
+
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public ContactLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-    public void setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener listener){
-        mSwipeRefreshLayout.setOnRefreshListener(listener);
-    }
-
-    public void setRefreshing(boolean refreshing){
-        mSwipeRefreshLayout.setRefreshing(refreshing);
     }
 
     public ContactLayout(Context context, AttributeSet attrs, int defStyleAttr) {
