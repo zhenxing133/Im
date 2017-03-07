@@ -7,7 +7,7 @@ import com.hyphenate.chat.EMOptions;
 import com.ithomework.im.view.BaseActivity;
 
 import cn.bmob.v3.Bmob;
-
+import com.ithomework.im.db.DBUtils;
 /**
  * Created by Administrator on 2017/3/1.
  */
@@ -21,7 +21,11 @@ public class MyApplication extends Application {
 
         //第一：默认初始化
         Bmob.initialize(this, "221fdf0f442770d9b2f19f3de75c960f");
+
+        initDBUtils();
     }
+
+
 
     private void initHuanXin() {
         EMOptions options = new EMOptions();
@@ -33,6 +37,8 @@ public class MyApplication extends Application {
 //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
         EMClient.getInstance().setDebugMode(true);
     }
-
+    private void initDBUtils() {
+        DBUtils.initDB(this);
+    }
 
 }

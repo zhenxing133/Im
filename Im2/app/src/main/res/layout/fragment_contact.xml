@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:textSize="20dp"
-        android:text="联系人"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+   <com.ithomework.im.widget.ContactLayout
+       android:id="@+id/contact_layout"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       />
 
 </LinearLayout>
