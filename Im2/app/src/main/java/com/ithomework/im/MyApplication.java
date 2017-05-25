@@ -4,7 +4,9 @@ import android.app.Application;
 import android.util.Log;
 
 import com.hyphenate.EMContactListener;
+import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.exceptions.HyphenateException;
 import com.ithomework.im.view.BaseActivity;
@@ -13,6 +15,8 @@ import cn.bmob.v3.Bmob;
 import com.ithomework.im.db.DBUtils;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/3/1.
@@ -29,7 +33,11 @@ public class MyApplication extends Application {
         Bmob.initialize(this, "221fdf0f442770d9b2f19f3de75c960f");
 
         initDBUtils();
+        initContactListener();
+        //消息监听
+        initMessageListener();
     }
+
 
 
 
@@ -50,23 +58,21 @@ public class MyApplication extends Application {
     private void initContactListener() {
         EMClient.getInstance().contactManager().setContactListener(new EMContactListener() {
             @Override
-            public void onContactAdded(String s) {
+            public void onContactAdded(String username) {
                 //好友请求被同意
                 //发出通知让ContactFragment更新UI
-                EventBus.getDefault().post(new OnContactUpdateEvent(s, true));
+                EventBus.getDefault().post(new OnContactUpdateEvent(username, true));
             }
 
             @Override
-            public void onContactDeleted(String s) {
+            public void onContactDeleted(String username) {
                 //被删除时回调此方法
-                EventBus.getDefault().post(new OnContactUpdateEvent(s, false));
-               // Log.d(TAG, "onContactDeleted: " + s);
+                EventBus.getDefault().post(new OnContactUpdateEvent(username, false));
             }
 
             @Override
             public void onContactInvited(String username, String reason) {
                 //收到好友邀请
-               // Log.d(TAG, "onContactInvited: " + username + "/" + reason);
                 //同意或者拒绝
                 try {
                     EMClient.getInstance().contactManager().acceptInvitation(username);
@@ -84,17 +90,41 @@ public class MyApplication extends Application {
             public void onFriendRequestDeclined(String username) {
                 //好友请求被拒绝
             }
+        });
+    }
 
+    private void initMessageListener() {
+        EMClient.getInstance().chatManager().addMessageListener(new EMMessageListener() {
+            @Override
+            public void onMessageReceived(List<EMMessage> messages) {
+                //收到消息
+                if (messages != null && messages.size() > 0) {
 
-            public void onContactAgreed(String s) {
-                //增加了联系人时回调此方法
+                    EventBus.getDefault().post(messages.get(0));
+                }
             }
 
+            @Override
+            public void onCmdMessageReceived(List<EMMessage> messages) {
 
-            public void onContactRefused(String s) {
-                //好友请求被拒绝
+            }
+
+            @Override
+            public void onMessageRead(List<EMMessage> messages) {
+
+            }
+
+            @Override
+            public void onMessageDelivered(List<EMMessage> messages) {
+
+            }
+
+            @Override
+            public void onMessageChanged(EMMessage message, Object change) {
+
             }
         });
     }
+
 
 }

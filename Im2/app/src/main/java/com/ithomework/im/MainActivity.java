@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.ithomework.im.util.FragmentFactory;
+import com.ithomework.im.view.AddFriendActivity;
 import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -70,7 +71,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_add_friend:
-               // startActivity(AddFriendActivity.class,false);
+                startActivity(AddFriendActivity.class,false);
                 break;
             case R.id.menu_scan:
                 showToast("分享好友");

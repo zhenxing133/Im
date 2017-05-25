@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.ithomework.im.util.StringUtils;
 import com.ithomework.im.R;
+import com.ithomework.im.view.ContactFragment;
+
 import java.util.List;
 
 /**
@@ -71,6 +73,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
 
     }
     private OnItemClickListener mOnItemClickListener;
+
+
+
     public interface OnItemClickListener {
         void onItemLongClick(String contact, int position);
         void onItemClick(String contact, int position);
