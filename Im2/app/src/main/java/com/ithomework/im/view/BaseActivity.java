@@ -28,6 +28,7 @@ public class BaseActivity extends AppCompatActivity {
 
        //所有的Activity都依附于一个Application，在Activity中只要通过 getApplication（）方法，就能拿到当前应用中的Application对象
         mApplication = (MyApplication) getApplication();
+        mApplication.addActivity(this);
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setCancelable(false);
         mSharedPreferences = getSharedPreferences("config",MODE_PRIVATE);
@@ -61,8 +62,8 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         mProgressDialog.dismiss();
+        mApplication.removeActivity(this);
     }
 
     public void showToast(String msg){

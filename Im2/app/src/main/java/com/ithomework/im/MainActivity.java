@@ -12,6 +12,9 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMMessage;
 import com.ithomework.im.util.FragmentFactory;
 import com.ithomework.im.view.AddFriendActivity;
 import com.ashokvarma.bottomnavigation.BadgeItem;
@@ -19,6 +22,11 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ithomework.im.view.BaseActivity;
 import com.ithomework.im.view.BaseFragment;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -45,6 +53,27 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         initToolBar();
         initBottomNavigation();
         initFirstFragment();
+        EventBus.getDefault().register(this);
+    }
+    @Subscribe(threadMode=ThreadMode.MAIN)
+    public void onEvent(EMMessage message) {
+
+        UpDateCount();
+
+    }
+    //更新未读消息的个数
+    private void UpDateCount() {
+       int count = EMClient.getInstance().chatManager().getUnreadMsgsCount();
+        if (count>99){
+            mBadgeItem.setText("99+");
+            mBadgeItem.show(true);
+        }else if (count>0){
+            mBadgeItem.setText(count+"");
+            mBadgeItem.show(true);
+        }else{
+            mBadgeItem.hide(true);
+        }
+
     }
 
     private void initToolBar() {
@@ -158,5 +187,17 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     @Override
     public void onTabReselected(int position) {
         showToast("又选中了"+position);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        UpDateCount();
     }
 }

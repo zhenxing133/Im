@@ -27,7 +27,7 @@ public class ChatPressenterIml implements ChatPressenter {
     public void initChat(String contact) {
         //如果聊天过，那么获取最多最近的20条聊天记录，然后展示到View层,否则返回一个空
         updateChatData(contact);
-        //chatView.onInit(mEMMessageList);
+        chatView.onInit(mEMMessageList);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class ChatPressenterIml implements ChatPressenter {
         EMConversation conversation = EMClient.getInstance().chatManager().getConversation(contact);
         if (conversation != null) {
             //需要将所有的未读消息标记为已读
-          //  conversation.markAllMessagesAsRead();
+            conversation.markAllMessagesAsRead();
 
             //曾经有聊天过
             //获取最后一条消息

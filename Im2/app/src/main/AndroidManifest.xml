@@ -33,8 +33,21 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" android:launchMode="singleTask">
+        <activity android:name=".MainActivity" android:launchMode="singleTask"/>
+        <activity android:name=".view.SplashActivity" android:theme="@style/AppTheme.FULLSCREEN">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".view.LoginActivity"
+            android:launchMode="singleTask">
+        </activity>
+        <activity android:name=".view.RegistActivity">
+        </activity>
+        <activity android:name=".view.AddFriendActivity"/>
+        <activity android:name=".view.ChatActivity"/>
 
         <!-- 设置环信应用的AppKey -->
         <meta-data
@@ -58,22 +71,6 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name=".view.SplashActivity"
-            android:theme="@style/AppTheme.FULLSCREEN">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".view.LoginActivity"
-            android:launchMode="singleTask">
-        </activity>
-        <activity android:name=".view.RegistActivity">
-        </activity>
-        <activity android:name=".view.AddFriendActivity"/>
-        <activity android:name=".view.ChatActivity"/>
     </application>
 </manifest>
